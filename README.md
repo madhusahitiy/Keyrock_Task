@@ -85,6 +85,19 @@ Placed=1, Canceled=0, Executed=1
 ```
 </details>
 
+## 📁 File Overview
+
+| File / Folder         | Description |
+|-----------------------|-------------|
+| `features/trading.feature` | BDD scenarios defining the trading simulation behavior. |
+| `features/environment.py` | Global setup & teardown hooks for Behave tests. |
+| `features/steps/trading_steps.py` | Step definitions implementing the `.feature` scenarios. |
+| `features/steps/ui_helper.py` | UI automation helpers (Playwright) + Binance price fetch. |
+| `trading_simulation.py` | Core logic for the trading simulation: triggers, cancels, executions. |
+| `requirements.txt` | Python dependencies for the project. |
+| `README.md` | Project documentation and instructions. |
+
+
 🧩 How It Works
 
 Price Fetching – Binance API is queried in real-time to get current asset prices.       
