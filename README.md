@@ -7,15 +7,22 @@ This project simulates crypto trading scenarios using **Binance live prices**, a
 
 ## 📂 Project Structure
 
+<details>
+<summary>Click to expand</summary>
+  
+```text
 features/
-│── trading.feature # BDD scenarios for trading simulations  
-│── environment.py # Global setup/teardown for Behave tests   
-│── steps/    
-│ ├── trading_steps.py # Step definitions for trading.feature    
-│ ├── ui_helpers.py # UI automation helpers & Binance price fetch    
-trading_simulation.py # Core simulation logic        
-requirements.txt # Python dependencies            
-README.md # This file
+│── trading.feature         # BDD scenarios for trading simulations
+│── environment.py          # Global setup/teardown for Behave tests
+│── steps/
+│    ├── trading_steps.py    # Step definitions for trading.feature
+│    ├── ui_helpers.py       # UI automation helpers & Binance price fetch
+trading_simulation.py        # Core simulation logic
+requirements.txt             # Python dependencies
+README.md                    # This file
+```
+
+</details> 
 
 ---
 
@@ -40,7 +47,8 @@ behave -f plain --no-capture
 ## 📜 Example Test Output
 <details>
 <summary>Click to expand</summary>
-
+  
+```text
 keyrock-project % behave -f plain --no-capture
 USING RUNNER: behave.runner:Runner
 [DEBUG] Starting Playwright for test suite.
@@ -74,7 +82,7 @@ ORDER EXECUTED: BUY 0.01 BTC @ $116,568.49
 
 Placed=1, Canceled=0, Executed=1
 
-
+```
 </details>
 
 🧩 How It Works
