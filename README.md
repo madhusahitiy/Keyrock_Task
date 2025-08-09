@@ -1,42 +1,46 @@
-# Keyrock_Task
-Automated Trading Simulation (BDD Tests)
-This project simulates crypto trading scenarios using Binance live prices, automated UI checks with Playwright, and BDD tests via Behave.
+# Keyrock_Task  
+**Automated Trading Simulation (BDD Tests)**  
 
-📂 Project Structure
+This project simulates crypto trading scenarios using **Binance live prices**, automated UI checks with **Playwright**, and BDD tests via **Behave**.
+
+---
+
+## 📂 Project Structure
 
 features/
-│── trading.feature         # BDD scenarios for trading simulations
-│── environment.py          # Global setup/teardown for Behave tests
-│── steps/
-│    ├── trading_steps.py    # Step definitions for trading.feature
-│    ├── ui_helpers.py       # UI automation helpers & Binance price fetch
-trading_simulation.py        # Core simulation logic
-requirements.txt             # Python dependencies
-README.md                    # This file
+│── trading.feature # BDD scenarios for trading simulations  
+│── environment.py # Global setup/teardown for Behave tests   
+│── steps/    
+│ ├── trading_steps.py # Step definitions for trading.feature    
+│ ├── ui_helpers.py # UI automation helpers & Binance price fetch    
+trading_simulation.py # Core simulation logic        
+requirements.txt # Python dependencies            
+README.md # This file
 
+---
 
-⚙️ Installation & Setup
-1️⃣ Clone the Repository
+## ⚙️ Installation & Setup
 
+### 1️⃣ Clone the Repository
+```bash
 git clone https://github.com/your-username/trading-simulation.git
 cd trading-simulation
 
 2️⃣ Install Dependencies
-
 Make sure you have Python 3.9+ installed, then:
 pip install -r requirements.txt
 
 3️⃣ Install Playwright Browsers
-
 playwright install
+
 ▶️ Running the Tests
 Run all BDD scenarios:
-
 behave -f plain --no-capture
 
 📜 Example Test Output
-Example output from one test scenario:
 
+<details><summary>Click to expand</summary>
+Example output from one test scenario:
 keyrock-project % behave -f plain --no-capture
 USING RUNNER: behave.runner:Runner
 [DEBUG] Starting Playwright for test suite.
@@ -68,10 +72,10 @@ Placed LIMIT BUY: 0.01 BTC @ $116,568.67
 
 ORDER EXECUTED: BUY 0.01 BTC @ $116,568.49
 
- Placed=1, Canceled=0, Executed=1
- 
-🧩 How It Works
+Placed=1, Canceled=0, Executed=1
+</details>
 
+🧩 How It Works
 Price Fetching – Binance API is queried in real-time to get current asset prices.
 
 Trigger Conditions – When the price moves by a configured USD or % value, an order is "placed".
@@ -83,7 +87,6 @@ Execution – If the price reaches the target order price, it is marked executed
 Global Totals – Summary of placed, executed, and canceled orders is tracked across all scenarios.
 
 ⚠️ Notes
-
 Requires internet access for Binance API.
 
 The trading simulation is mocked — no real orders are sent.
