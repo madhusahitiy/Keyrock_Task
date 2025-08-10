@@ -33,7 +33,6 @@ class TradingUI:
         print(f"[DEBUG] Asset {asset_name} selected.")
 
 def get_price(symbol):
-    """Fetch live price from Binance API."""
     url = f"https://api.binance.com/api/v3/ticker/price?symbol={symbol.upper()}"
     resp = requests.get(url)
     resp.raise_for_status()
