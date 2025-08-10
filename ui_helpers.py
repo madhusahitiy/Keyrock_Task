@@ -14,7 +14,6 @@ class TradingUI:
     async def start(self):
         print(f"[DEBUG] Navigating to: {self.trading_ui_url}")
 
-        # Check if UI is reachable before launching
         try:
             r = requests.get(self.trading_ui_url, timeout=2)
             r.raise_for_status()
