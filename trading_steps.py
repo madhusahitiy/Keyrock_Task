@@ -30,7 +30,6 @@ def step_run_simulation(context):
         duration=30
     )
 
-    # Update global totals in environment.py
     environment.orders_totals["placed"] += placed
     environment.orders_totals["canceled"] += canceled
     environment.orders_totals["executed"] += executed
