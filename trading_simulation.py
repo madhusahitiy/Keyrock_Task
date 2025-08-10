@@ -11,7 +11,6 @@ MAGENTA = "\033[95m"
 RESET = "\033[0m"
 
 def get_price(symbol):
-    """Fetch current price from Binance public API."""
     url = f"https://api.binance.com/api/v3/ticker/price?symbol={symbol}"
     try:
         r = requests.get(url, timeout=5)
@@ -22,7 +21,6 @@ def get_price(symbol):
         return None
 
 def log(msg):
-    """Print log with timestamp."""
     print(f"[{datetime.now().strftime('%H:%M:%S')}] {msg}")
 
 def trading_simulation(asset, trigger_move, trigger_type, order_offset, cancel_move, cancel_type, poll_interval, duration):
@@ -30,9 +28,8 @@ def trading_simulation(asset, trigger_move, trigger_type, order_offset, cancel_m
     initial_price = get_price(asset)
     if initial_price is None:
         print("Error: Could not fetch initial price.")
-        return 0, 0, 0  # Return zeros if no data
+        return 0, 0, 0  
 
-    # Convert trigger and cancel values based on type
     if trigger_type.lower() == "percent":
         trigger_value = initial_price * (trigger_move / 100)
     else:
