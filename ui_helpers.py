@@ -1,41 +1,50 @@
-import requests
-
-
+# features/steps/ui_helpers.py
 class TradingUI:
-    def __init__(self, browser, trading_ui_url):
+    def __init__(self, browser, base_url):
         self.browser = browser
-        self.trading_ui_url = trading_ui_url
+        self.base_url = base_url
         self.page = None
-        self.selectors = {
-            "asset_input": "input[placeholder='Search asset']",
-            "asset_result": ".asset-list-item >> nth=0",
-        }
 
-    async def start(self):
-        print(f"[DEBUG] Navigating to: {self.trading_ui_url}")
+    async def open(self):
+        if not self.page:
+            self.page = await self.browser.new_page()
+            await self.page.goto(self.base_url)
 
+    async def place_order(self):
+        await self.open()
+        print("[DEBUG] Clicking Place Order button in UI...")
+        await self.page.click("text=Place Order")
+
+    async def cancel_order(self):
+        await self.open()
+        print("[DEBUG] Clicking Cancel Order button in UI...")
+        await self.page.click("text=Cancel Order")
+
+    async def execute_order(self):
+        await self.open()
+        print("[DEBUG] Clicking Execute Order button in UI...")
+        await self.page.click("text=Execute Order")
+
+    async def start_simulation(self):
+        await self.open()
+        print("[DEBUG] Clicking Start Simulation button in UI...")
+        await self.page.click("text=Start Simulation")
+
+    async def log_to_ui(self, message: str):
+        """
+        Adds a log message to the UI if your UI supports
+        an input field or some JS-based logging mechanism.
+        This is a placeholder — adapt it to your UI.
+        """
         try:
-            r = requests.get(self.trading_ui_url, timeout=2)
-            r.raise_for_status()
+            await self.open()
+            # Example: If your UI has a textarea with id="log"
+            # and JS function to append logs
+            await self.page.evaluate(f"""
+                let logBox = document.getElementById('log');
+                if (logBox) {{
+                    logBox.value += "\\n{message}";
+                }}
+            """)
         except Exception as e:
-            raise RuntimeError(f"Trading UI not reachable at {self.trading_ui_url}: {e}")
-
-
-        self.page = await self.browser.new_page()
-        await self.page.goto(self.trading_ui_url)
-        await self.page.wait_for_load_state("networkidle")
-        print("[DEBUG] UI loaded.")
-
-    async def select_asset(self, asset_name):
-        print(f"[DEBUG] Selecting asset: {asset_name}")
-        await self.page.fill(self.selectors["asset_input"], asset_name)
-        await self.page.click(self.selectors["asset_result"])
-        print(f"[DEBUG] Asset {asset_name} selected.")
-
-def get_price(symbol):
-    url = f"https://api.binance.com/api/v3/ticker/price?symbol={symbol.upper()}"
-    resp = requests.get(url)
-    resp.raise_for_status()
-    price = float(resp.json()["price"])
-    print(f"[DEBUG] Price for {symbol.upper()}: {price}")
-    return price
+            print(f"[WARN] Could not log to UI: {e}")
