@@ -49,7 +49,7 @@ trading-simulation/
 
 ### 1️⃣ Clone the Repository
 
-git clone https://github.com/your-username/trading-simulation.git
+git clone https://github.com/madhusahitiy/Keyrock_Task
 cd trading-simulation
 
 2️⃣ Install Dependencies
