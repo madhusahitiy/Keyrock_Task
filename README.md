@@ -96,15 +96,15 @@ behave
 
 
 How It Works
-*Initialization: The simulation sets an initial random price and chooses BUY or SELL for the first order.
-*Price Simulation: The price changes randomly on every tick.
-*Trigger Check: If price moves by at least the trigger amount, the planned order is placed.
-*Outcome:If price comes close enough to the placed order → execution (green log)
-         If price moves beyond cancel distance → cancellation (red log)
+*Initialization: The simulation sets an initial random price and chooses BUY or SELL for the first order.          
+*Price Simulation: The price changes randomly on every tick.                                    
+*Trigger Check: If price moves by at least the trigger amount, the planned order is placed.              
+*Outcome:If price comes close enough to the placed order → execution (green log)                  
+         If price moves beyond cancel distance → cancellation (red log)                
 *End of Scenario: Once an order is executed or canceled, the simulation moves to the next scenario.
 
 Customizing:
 
-*Change Trigger/Cancel Values in your .feature file
-*Tick Speed: Modify tick_delay in TradingSimulation.run() to speed up or slow down price changes
+*Change Trigger/Cancel Values in your .feature file                     
+*Tick Speed: Modify tick_delay in TradingSimulation.run() to speed up or slow down price changes                   
 *Price Movement Range: Adjust the random.uniform(-5, 5) value in run() for bigger/smaller volatility
