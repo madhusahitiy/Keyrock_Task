@@ -16,8 +16,7 @@ It supports different trigger/cancel price moves and random BUY/SELL starting po
 ## Installation
 
 ```bash
-git clone <your-repo-url>
-cd <repo-folder>
+git clone <https://github.com/madhusahitiy/Keyrock_Task>
 pip install -r requirements.txt
 ```
 
