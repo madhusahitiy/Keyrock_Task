@@ -1,9 +1,25 @@
-# Keyrock_Task  
-**Automated Trading Simulation (BDD Tests)**  
+# Trading Simulation with Behave
 
-This project simulates crypto trading scenarios using **Binance live prices**, automated UI checks with **Playwright**, and BDD tests via **Behave**.
+This project simulates simple crypto trading scenarios using Python, Behave (BDD), and an interactive logging UI.  
+It supports different trigger/cancel price moves and random BUY/SELL starting positions.
 
 ---
+
+## Requirements
+
+- Python 3.8+
+- `behave`
+- Any terminal that supports ANSI colors
+
+---
+
+## Installation
+
+```bash
+git clone <your-repo-url>
+cd <repo-folder>
+pip install -r requirements.txt
+```
 
 ## 📂 Project Structure
 
@@ -11,15 +27,19 @@ This project simulates crypto trading scenarios using **Binance live prices**, a
 <summary>Click to expand</summary>
   
 ```text
-features/
-│── trading.feature         # BDD scenarios for trading simulations
-│── environment.py          # Global setup/teardown for Behave tests
-│── steps/
-│    ├── trading_steps.py    # Step definitions for trading.feature
-│    ├── ui_helpers.py       # UI automation helpers & Binance price fetch
-trading_simulation.py        # Core simulation logic
-requirements.txt             # Python dependencies
-README.md                    # This file
+trading-simulation/
+├── features/
+│   ├── trading.feature
+│   ├── environment.py
+│   └── steps/
+│       ├── trading_steps.py
+│       └── ui_helper.py
+├── trading_simulation.py
+├── run_with_ui.py
+├── requirements.txt
+└── README.md
+
+
 ```
 
 </details> 
@@ -42,73 +62,49 @@ playwright install
 
 ▶️ Running the Tests
 Run all BDD scenarios:
-behave -f plain --no-capture
+behave 
 
 ## 📜 Example Test Output
 <details>
 <summary>Click to expand</summary>
   
 ```text
-keyrock-project % behave -f plain --no-capture
-USING RUNNER: behave.runner:Runner
-[DEBUG] Starting Playwright for test suite.
-Feature: Automated Trading Simulation
+[02:39:24] SIMULATION STARTED @ 29252.84
+[02:39:24] TRIGGER MOVE SET TO 0.001 USD
+[02:39:24] CANCEL MOVE SET TO 99999.0 USD
+[02:39:24] PLANNED ORDER TYPE: BUY
+[02:39:24] [1;94mBUY ORDER PLACED[0m @ 29252.13
+[02:39:25] [1;92mSELL ORDER EXECUTED[0m @ 29253.58
 
-  Scenario Outline: Run trading simulation for given asset and parameters -- @1.1 
-    Given I start a trading simulation for "BTCUSDT" ... passed in 0.000s
-    And trigger move is 0.001 usd ... passed in 0.000s
-    And cancel move is 50 usd ... passed in 0.000s
-=== Trading Simulation Start ===
-Asset: BTC
-Initial Price: $116,580.01
-Trigger: Price moves ±0.001 usd (≈ ±$0.00)
-Order Type: Limit Sell at $116,580.00
-Cancel Condition: Price moves ±50.0 usd (≈ ±$50.00) after order placement
-Polling Interval: 2s
-----------------------------------
-
-[00:04:30] Current Price: $116,580.01 → Waiting for trigger...
-[00:04:33] Price dropped to $116,568.68 → Trigger hit (down $11.33)
-
-Placed LIMIT BUY: 0.01 BTC @ $116,568.67
-[00:04:35] Current Price: $116,568.69 → Monitoring after order...
-[00:04:37] Current Price: $116,568.68 → Monitoring after order...
-[00:04:40] Current Price: $116,568.68 → Monitoring after order...
-[00:04:42] Current Price: $116,568.68 → Monitoring after order...
-[00:04:44] Current Price: $116,568.69 → Monitoring after order...
-[00:04:46] Current Price: $116,568.68 → Monitoring after order...
-
-ORDER EXECUTED: BUY 0.01 BTC @ $116,568.49
-
-Placed=1, Canceled=0, Executed=1
 
 ```
 </details>
 
 ## 📁 File Overview
 
-| File / Folder         | Description |
-|-----------------------|-------------|
-| `features/trading.feature` | BDD scenarios defining the trading simulation behavior. |
-| `features/environment.py` | Global setup & teardown hooks for Behave tests. |
-| `features/steps/trading_steps.py` | Step definitions implementing the `.feature` scenarios. |
-| `features/steps/ui_helper.py` | UI automation helpers (Playwright) + Binance price fetch. |
-| `trading_simulation.py` | Core logic for the trading simulation: triggers, cancels, executions. |
-| `requirements.txt` | Python dependencies for the project. |
-| `README.md` | Project documentation and instructions. |
+| File / Folder                     | Description                                                                                                       |
+| --------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `features/trading.feature`        | BDD scenarios defining the trading simulation behavior.                                                           |
+| `features/environment.py`         | Global setup & teardown hooks for Behave tests.                                                                   |
+| `features/steps/trading_steps.py` | Step definitions implementing the `.feature` scenarios.                                                           |
+| `features/steps/ui_helper.py`     | UI automation helpers (Playwright) + Binance price fetch.                                                         |
+| `trading_simulation.py`           | Core logic for the trading simulation: triggers, cancels, executions (with ANSI-colored logging).                 |
+| `run_with_ui.py`                  | Standalone script to run a single trading simulation with the UI, without Behave. Useful for debugging and demos. |
+| `requirements.txt`                | Python dependencies for the project.                                                                              |
+| `README.md`                       | Project documentation and instructions.                                                                           |
 
 
-🧩 How It Works
 
-Price Fetching – Binance API is queried in real-time to get current asset prices.       
-Trigger Conditions – When the price moves by a configured USD or % value, an order is "placed".         
-Cancel Conditions – If price moves further in an opposite direction before execution, the order is canceled.        
-Execution – If the price reaches the target order price, it is marked executed.            
-Global Totals – Summary of placed, executed, and canceled orders is tracked across all scenarios.
+How It Works
+*Initialization: The simulation sets an initial random price and chooses BUY or SELL for the first order.
+*Price Simulation: The price changes randomly on every tick.
+*Trigger Check: If price moves by at least the trigger amount, the planned order is placed.
+*Outcome:If price comes close enough to the placed order → execution (green log)
+         If price moves beyond cancel distance → cancellation (red log)
+*End of Scenario: Once an order is executed or canceled, the simulation moves to the next scenario.
 
-⚠️ Notes
+Customizing:
 
-Requires internet access for Binance API.           
-The trading simulation is mocked — no real orders are sent.          
-The Playwright UI URL in environment.py must be reachable, otherwise tests will raise an error.          
-Default order_offset is 0.01 if not specified in feature files.
+*Change Trigger/Cancel Values in your .feature file
+*Tick Speed: Modify tick_delay in TradingSimulation.run() to speed up or slow down price changes
+*Price Movement Range: Adjust the random.uniform(-5, 5) value in run() for bigger/smaller volatility
