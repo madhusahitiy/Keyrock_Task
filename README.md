@@ -16,7 +16,7 @@ It supports different trigger/cancel price moves and random BUY/SELL starting po
 ## Installation
 
 ```bash
-git clone <https://github.com/madhusahitiy/Keyrock_Task>
+git clone https://github.com/madhusahitiy/Keyrock_Task.git
 pip install -r requirements.txt
 ```
 
@@ -49,7 +49,7 @@ trading-simulation/
 
 ### 1️⃣ Clone the Repository
 
-git clone https://github.com/madhusahitiy/Keyrock_Task
+git clone https://github.com/madhusahitiy/Keyrock_Task.git
 cd trading-simulation
 
 2️⃣ Install Dependencies
